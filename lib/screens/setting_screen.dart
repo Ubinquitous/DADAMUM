@@ -1,4 +1,5 @@
 import 'package:dadamum/screens/main_screen.dart';
+import 'package:dadamum/services/api.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -49,6 +50,10 @@ class _SettingScreenState extends State<SettingScreen> {
     prefs.setString('schoolName', schoolEditController.text);
     prefs.setString('atptName', returnATPTCode(selectValue));
     prefs.setBool('isVisited', true);
+    prefs.setString(
+        'schoolCode',
+        await Api.getSchoolCode(
+            schoolEditController.text, returnATPTCode(selectValue)));
     navigatorPushMain();
   }
 
@@ -164,7 +169,7 @@ class _SettingScreenState extends State<SettingScreen> {
                           ),
                         ),
                       ),
-                    )
+                    ),
                   ],
                 ),
               ),
