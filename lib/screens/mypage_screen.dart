@@ -85,6 +85,7 @@ class _MyPageScreenState extends State<MyPageScreen> {
 
   void onTapResetInfo() async {
     final prefs = await SharedPreferences.getInstance();
+    prefs.clear();
     prefs.setString('schoolName', schoolEditController.text);
     prefs.setString('atptName', returnATPTCode(selectValue));
     prefs.setBool('isVisited', true);
@@ -107,9 +108,15 @@ class _MyPageScreenState extends State<MyPageScreen> {
 
   void initPrefs() async {
     final prefs = await SharedPreferences.getInstance();
-    schoolName = prefs.getString('schoolName')!;
-    atptName = foramtAtptName(prefs.getString('atptName')!);
-    schoolCode = prefs.getString('schoolCode')!;
+    if (prefs.getString('schoolCode') != null) {
+      schoolCode = prefs.getString('schoolCode')!;
+    }
+    if (prefs.getString('atptName') != null) {
+      atptName = prefs.getString('atptName')!;
+    }
+    if (prefs.getString('schoolName') != null) {
+      schoolName = prefs.getString('schoolName')!;
+    }
     setState(() {});
   }
 
@@ -166,84 +173,6 @@ class _MyPageScreenState extends State<MyPageScreen> {
                     color: Colors.blue,
                   ),
                 ),
-              ],
-            ),
-          ),
-          SizedBox(
-            width: double.infinity,
-            height: 300,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const Text(
-                  '정보 변경',
-                  style: TextStyle(
-                    fontSize: 24,
-                    fontWeight: FontWeight.w800,
-                    color: Colors.blue,
-                  ),
-                ),
-                const SizedBox(height: 20),
-                SizedBox(
-                  width: 260,
-                  child: DropdownButton(
-                    isExpanded: true,
-                    value: selectValue,
-                    items: atptValue.map(
-                      (value) {
-                        return DropdownMenuItem(
-                          value: value,
-                          child: Text(value),
-                        );
-                      },
-                    ).toList(),
-                    onChanged: (value) {
-                      setState(() {
-                        selectValue = value!;
-                      });
-                    },
-                    style: const TextStyle(
-                      fontSize: 14,
-                      color: Colors.black,
-                    ),
-                  ),
-                ),
-                SizedBox(
-                  width: 260,
-                  child: TextField(
-                    controller: schoolEditController,
-                    style: const TextStyle(
-                      fontSize: 14,
-                    ),
-                    decoration: const InputDecoration(
-                      hintText: '학교명을 정확히 입력해주세요.',
-                    ),
-                  ),
-                ),
-                const SizedBox(
-                  height: 80,
-                ),
-                GestureDetector(
-                  onTap: onTapResetInfo,
-                  child: Container(
-                    width: 260,
-                    height: 42,
-                    decoration: BoxDecoration(
-                      color: Colors.blue,
-                      borderRadius: BorderRadius.circular(99),
-                    ),
-                    child: const Center(
-                      child: Text(
-                        '변경하기',
-                        style: TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w700,
-                          color: Colors.white,
-                        ),
-                      ),
-                    ),
-                  ),
-                )
               ],
             ),
           ),

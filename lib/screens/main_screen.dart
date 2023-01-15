@@ -39,9 +39,16 @@ class _MainScreenState extends State<MainScreen> {
 
   void initPrefs() async {
     final prefs = await SharedPreferences.getInstance();
-    schoolName = prefs.getString('schoolName')!;
-    atptName = prefs.getString('atptName')!;
-    schoolCode = prefs.getString('schoolCode')!;
+    if (prefs.getString('schoolCode') != null) {
+      schoolCode = prefs.getString('schoolCode')!;
+    }
+    if (prefs.getString('atptName') != null) {
+      atptName = prefs.getString('atptName')!;
+    }
+    if (prefs.getString('schoolName') != null) {
+      schoolName = prefs.getString('schoolName')!;
+    }
+    setState(() {});
   }
 
   void setMeal() async {
